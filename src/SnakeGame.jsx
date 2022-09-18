@@ -89,6 +89,7 @@ class SnakeGame extends React.Component {
       if (!this.state.isGameOver) {
         this.moveSnake()
         this.tryToEatSnake()
+        this.tryToReachEnd()
         this.tryToEatApple()
         this.setState({ directionChanged: false })
       }
@@ -233,7 +234,33 @@ class SnakeGame extends React.Component {
       })
     }
   }
-
+  tryToReachEnd() {
+    let snake = this.state.snake
+    let hasReachedEnd = false
+    const xPos = snake[0].Xpos
+    const yPos = snake[0].Ypos
+    console.log({
+      xPos,
+      yPos
+    })
+    switch(this.state.direction) {
+      case 'left':
+        if (xPos === this.state.width  - this.state.blockWidth) hasReachedEnd = true
+      break
+      case 'left':
+        if (yPos === this.state.height  - this.state.blockHeight) hasReachedEnd = true
+      break
+      case 'right':
+        if (xPos === 0) hasReachedEnd = true
+      break
+      default:
+        if (yPos === 0) hasReachedEnd = true
+      break
+    }
+    if(hasReachedEnd) {
+      this.setState({isGameOver:true})
+    }
+  }
   tryToEatSnake() {
     let snake = this.state.snake
 
